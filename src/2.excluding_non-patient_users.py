@@ -1,9 +1,19 @@
 # ------------------------------------------------------------------------------
 # 2.excluding_non-patient_users.py
-# 
-# This script processes synthetic mobile trajectory data used only for demonstration.
-# No real or personal data is included. Results generated from this dataset
-# SHOULD NOT be interpreted as real-world findings or algorithmic validation.
+#
+# This script performs a preprocessing step for the synthetic mobile trajectory
+# dataset used in this project. It identifies and removes hospital staff users
+# from daily trajectory records based on their long-term appearance frequency.
+#
+# The workflow includes:
+#   1. Loading multiple daily single_day_patients_*.csv files.
+#   2. Identifying hospital staff as users appearing on ≥ N days.
+#   3. Saving a staff-ID list to disk.
+#   4. Generating cleaned daily trajectory files with staff removed.
+#
+# This script is designed for demonstration only.
+# It operates on fully synthetic data without any real or personal information.
+# Therefore, results are NOT intended for real-world inference or validation.
 # ------------------------------------------------------------------------------
  
 

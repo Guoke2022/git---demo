@@ -1,11 +1,20 @@
 # ------------------------------------------------------------------------------
 # 1.hospital_visits_identification.py
-
-# This script processes synthetic mobile trajectory data used only for demonstration.
-# No real or personal data is included. Results generated from this dataset
-# SHOULD NOT be interpreted as real-world findings or algorithmic validation.
+#
+# This script processes large-scale synthetic mobile trajectory data to extract
+# potential single-day hospital visits. It is part of the preprocessing pipeline
+# used in this project for demonstration purposes only.
+#
+# The workflow includes:
+#   1. Memory-efficient loading of raw CSV data in chunks.
+#   2. Coordinate cleaning and bounding-box filtering for each city.
+#   3. Spatial matching of trajectory points to hospital polygons.
+#   4. Identifying potential hospital visits based on residence duration.
+#
+# This script is designed for demonstration only.
+# It operates on fully synthetic data without any real or personal information.
+# Therefore, results are NOT intended for real-world inference or validation.
 # ------------------------------------------------------------------------------
- 
 
 import pandas as pd 
 import geopandas as gpd

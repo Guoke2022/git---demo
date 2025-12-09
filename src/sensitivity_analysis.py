@@ -14,8 +14,6 @@ Main functionalities include:
 
 All outputs are saved as CSV tables for further statistical analysis and visualization.
 
-Author: <Your Name>
-Repository: <Your GitHub Repo URL>
 """
 
 import pandas as pd

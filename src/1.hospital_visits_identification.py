@@ -1,4 +1,6 @@
 # ------------------------------------------------------------------------------
+# 1.hospital_visits_identification.py
+
 # This script processes synthetic mobile trajectory data used only for demonstration.
 # No real or personal data is included. Results generated from this dataset
 # SHOULD NOT be interpreted as real-world findings or algorithmic validation.

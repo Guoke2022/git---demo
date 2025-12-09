@@ -1,1 +1,117 @@
+# Hospital-Bypass
+
+This repository contains a collection of Python scripts for simulating, processing, and analyzing synthetic hospital visit trajectories.  
+All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.  
+No real or personal information is included.
+
+---
+
+## 📁 Project Structure
+Hospital-Bypass/
+│
+├── data/
+│ ├── data.csv # Synthetic trajectory data: id, lon, lat, datetime
+│ ├── AOI_raw/ # Synthetic AOI (hospital polygons) for testing
+│ └── result_test/ # Folder for storing testing outputs
+│
+└── src/ # Main analysis scripts
+
+---
+
+## 🧩 Overview of Scripts (src/)
+
+Below is a concise and standardized description of each script's purpose.
+
+### **1. hospital_visits_identification.py**
+Processes large-scale synthetic trajectory data to extract potential *single-day hospital visits*.  
+Key steps include:
+- Chunk-based loading of raw CSVs
+- Coordinate cleaning and bounding-box filtering
+- Spatial matching with hospital polygons
+- Identifying possible hospital visits via residence duration
+
+*This script is for demonstration only and does not use real mobility data.*
+
+---
+
+### **2. excluding_non-patient_users.py**
+Identifies and removes synthetic “hospital staff” from daily trajectory records based on long-term appearance frequency.  
+Workflow:
+- Load multiple `single_day_patients_*.csv` files
+- Flag users appearing ≥ N days as staff
+- Save staff-ID list
+- Output cleaned daily patient files
+
+*Also based entirely on synthetic data.*
+
+---
+
+### **3. plot_figure1.py**
+Computes statistics and generates the visualizations used in **Figure 1** of the study.  
+Includes:
+- Preprocessing
+- Extra travel ratio calculations
+- Visualizing travel distance, extra distance, and bypass rate for cities and city groups
+
+---
+
+### **4. plot_figure2.py**
+Computes summary tables and visualization for **Figure 2**.  
+Includes:
+- Summary CSVs for NNHI, extra travel distance, and bypass rate  
+- Subsets for top-tier and high-reputation hospitals  
+- Scatterplots (with log-fit) and bar charts
+
+---
+
+### **5. plot_figure3.py**
+Generates **Figure 3**, including:
+- Dual bar plots of bypass rate and NNHI by SES groups  
+- Lorenz curves  
+- C-index (CI) calculations for road distance, NNHI, and bypass
+
+---
+
+### **6. figure4.py**
+Computes:
+- Experienced Segregation (ES)
+- Income Index (II / ESC in manuscript)
+
+Generates **Figure 4**:
+- Boxplots of ES and income index across bypass groups and hospital accessibility levels
+
+---
+
+### **7. NNHI_calculate.py**
+Computes the **Nearest N Hospitals Index (NNHI)** and associated road-network distances.  
+Includes:
+- NNHI calculations  
+- Road-network distance computation via OSMnx  
+
+Written for academic replication; does **not** require actual road networks or city datasets to run.
+
+---
+
+### **8. sensitivity_analysis.py**
+Performs sensitivity analysis for hospital bypass behavior and SES disparities.  
+Includes:
+1. Sensitivity testing using **alternative bypass metrics**  
+2. Sensitivity testing for **patient identification thresholds**  
+Outputs:
+- CSV tables for robustness checks
+- City-level and group-level summary results
+
+---
+
+## 📦 Requirements
+
+Typical dependencies used across scripts include:
+pandas
+numpy
+matplotlib
+seaborn
+pathlib2
+geopandas (for spatial processing)
+shapely
+osmnx (for road-network distance in NNHI_calculate.py)
 

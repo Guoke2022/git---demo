@@ -52,7 +52,7 @@ Travel-time thresholds of 15, 30, and 60 minutes were adopted based on the “Go
 
 Distance-decay weights $W_r$ were derived from a Gaussian decay function:
 
-![alt text](E2SFCA2.png)
+![alt text](../images/E2SFCA2.png)
 
 with $\beta = 440$.
 
@@ -72,7 +72,7 @@ Each city was divided into 200 m × 200 m residential grid units. Units were ran
 
 For individuals from residential unit i visiting hospital L, we quantified their level of socioeconomic integration with all other units visiting the same hospital.
 
-![alt text](ES1.png)
+![alt text](../images/ES1.png)
 
 where:
 

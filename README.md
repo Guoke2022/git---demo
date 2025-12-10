@@ -93,8 +93,22 @@ Outputs:
 ---
 
 ### **9. MixedLogit**
-- The **discrete choice model** used in bypass behavior analysis
-- It includes a detailed introduction to the methods and code workflow of the discrete choice model.
+Performs mixed logit–based discrete choice modeling to analyze hospital bypass behavior.
+Includes:
+1.Estimation of trade-offs between hospital quality and travel distance
+2.Evaluation of systematic preference differences across SES groups
+3.Full workflow and methodological details (see METHODS.md)
+
+Outputs:
+- Estimated model parameters
+- Overall-sample results (no SES grouping)
+- SES-stratified results (High-SES, Middle-SES, Low-SES)
+
+Files:
+- step1_process.py – Data preprocessing for constructing patient–hospital choice sets
+- step2_mixlogit.py – Mixed Logit model estimation
+- MixedLogit_without_interaction_no_group – Results for the overall sample
+- MixedLogit_without_interaction_SES_group – Results for SES groups
 
 ### **10. else** 
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:

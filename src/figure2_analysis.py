@@ -1,11 +1,11 @@
-# ======================================================
-# plot_figure2.py
-# ======================================================
+# ------------------------------------------------------------------------------
+# figure2_analysis.py
+# 
 # Purpose:
 #   - Generate summary CSV files for NNHI, extra travel distance, and bypass rate
 #     including subsets for top-tier hospitals and high-reputation hospitals
 #   - Generate scatter plots with log-fitted line and bar plots for each measure
-# ======================================================
+# ------------------------------------------------------------------------------
 
 import pandas as pd
 import numpy as np

@@ -1,11 +1,11 @@
-"""
-plot_figure3.py
+# ------------------------------------------------------------------------------
+# figure3_analysis.py
 
-This script generates Figure 3 for hospital accessibility analysis:
-- Dual bar plot of bypass rate and NNHI by SES group
-- Lorenz curves and C-index (CI) for road distance, NNHI, and bypass
+# This script generates Figure 3 for hospital accessibility analysis:
+# - Dual bar plot of bypass rate and NNHI by SES group
+# - Lorenz curves and C-index (CI) for road distance, NNHI, and bypass
+# ------------------------------------------------------------------------------
 
-"""
 
 import pandas as pd
 import numpy as np

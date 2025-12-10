@@ -1,11 +1,11 @@
-# ======================================================
-# figure4.py
-# ======================================================
+# ------------------------------------------------------------------------------
+# figure4_analysis.py
+#
 # Purpose:
 #   - Compute experienced segregation (ES) and income index (as ESC in the manuscript)
 #   - Bin HousePrice into quantiles for grouping
 #   - Generate Figure 4: boxplots of ES and II(income index) vs Bypass and Hospital accessibility
-# ======================================================
+# ------------------------------------------------------------------------------
 
 import pandas as pd
 import numpy as np

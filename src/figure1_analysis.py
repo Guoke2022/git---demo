@@ -1,12 +1,11 @@
-"""
-plot_figure1.py
-
-This script generates key figures for the paper.
-It includes data preprocessing, calculation of extra travel ratios, 
-and visualization of travel distance, extra distance, and bypass rate
-for cities and city groups.
-
-"""
+# ------------------------------------------------------------------------------
+# figure1_analysis.py
+# 
+# This script generates key figures for the paper.
+# It includes data preprocessing, calculation of extra travel ratios, 
+# and visualization of travel distance, extra distance, and bypass rate
+# for cities and city groups.
+# ------------------------------------------------------------------------------
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick

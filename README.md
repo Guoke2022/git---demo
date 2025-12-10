@@ -132,23 +132,13 @@ These methodological explanations are intended to support reproducibility, trans
 Typical dependencies used across scripts include:
 
 pandas==2.3.3
-
 numpy==2.3.4
-
 geopandas==1.1.1
-
 haversine==2.9.0
-
 osmnx==2.0.7
-
 shapely==2.1.2
-
 seaborn==0.12.2
-
 matplotlib==3.9.0
-
 scipy==1.16.3
-
 xlogit==0.2.7
-
 cupy-cuda12x==13.6.0

@@ -86,8 +86,8 @@ Written for academic replication; does **not** require actual road networks or c
 ### **8. sensitivity_analysis.py**
 Performs sensitivity analysis for hospital bypass behavior and SES disparities.  
 Includes:
-1. Sensitivity testing using **alternative bypass metrics**  
-2. Sensitivity testing for **patient identification thresholds**  
+- Sensitivity testing using **alternative bypass metrics**  
+- Sensitivity testing for **patient identification thresholds**  
 Outputs:
 - CSV tables for robustness checks
 - City-level and group-level summary results

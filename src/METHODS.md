@@ -31,7 +31,7 @@ Hospital accessibility was evaluated using the Enhanced Two-Step Floating Catchm
 ### 2.1. General formulation
 
 Accessibility at demand point \(i\) is calculated as:
-
+![alt text](../images/E2SFCA.png)
 \[
 A_i = \sum_{j:\, t_{ij} \le T_r} R_j \, W_r
 \tag{1}

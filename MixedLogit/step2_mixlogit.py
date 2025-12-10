@@ -1,5 +1,4 @@
 
-# 导入相关的包
 from xlogit import MultinomialLogit,MixedLogit
 import pandas as pd
 import os
@@ -22,35 +21,35 @@ import random
 
 
 
-# -----------绘图样式设置------------------
+# -----------Plot style settings------------------
 plt.rcParams["font.size"] = 14
 
 
-# ------------装饰器-----------------------
+# ------------Log decorator-----------------------
 def process_log(func):
     @wraps(func)
     def wrapper(self,*args, **kwargs):
         try:
-            self.logger.info(f"开始调用函数: {func.__name__}")
+            self.logger.info(f"Start calling the function: {func.__name__}")
             start_time = time.time()
             result = func(self,*args, **kwargs)
             end_time = time.time()
-            self.logger.info(f"函数 {func.__name__} 执行完毕，耗时: {end_time - start_time:.4f} 秒 \n")
+            self.logger.info(f"Function {func.__name__}，time: {end_time - start_time:.4f} 秒 \n")
             return result
         except Exception as e:
-            self.logger.error(f"函数 {func.__name__} 执行过程中发生错误: {e}")
+            self.logger.error(f"Function {func.__name__} has error: {e}")
             raise
     return wrapper
 
 
-# ------------离散选择实验类-----------------
+# ------------DiscreteChoiceExperiment-----------------
 class DiscreteChoiceExperiment():
     def __init__(self,config:dict):
         """
-        初始化实验参数
+        Initialize parameters
         """
 
-        # 读取参数
+        # Load parameters
         self.experiment_name = config["experiment_name"]
         self.df_path = config["df_path"]
         self.group_attribute = config["group_attribute"]
@@ -69,7 +68,7 @@ class DiscreteChoiceExperiment():
         self.quality_utility_col = config["quality_utility_col"]
         self.cost_utility_col = config["cost_utility_col"]
 
-        # 合并需要的列
+        # Merge
         self.use_cols.append(self.avail)
         self.use_cols.append(self.id_col)
         self.use_cols.append(self.alt_col)
@@ -79,7 +78,7 @@ class DiscreteChoiceExperiment():
         if self.group_attribute:
             self.use_cols.append(self.group_attribute)
 
-        # 文件目录
+        # File directory
         self.work_dir = f"./{self.experiment_name}"
         self.config_dir = f"{self.work_dir}/config"
         self.log_dir = f"{self.work_dir}/log"
@@ -87,7 +86,7 @@ class DiscreteChoiceExperiment():
         self.WTT_dir = f"{self.work_dir}/WTT"
         
 
-        # 创建初始化路径文件夹
+        # Create initialization path folder
         os.makedirs(self.work_dir,exist_ok=True)
         os.makedirs(self.config_dir,exist_ok=True)
         os.makedirs(self.log_dir,exist_ok=True)
@@ -95,7 +94,7 @@ class DiscreteChoiceExperiment():
         os.makedirs(self.WTT_dir,exist_ok=True)
 
 
-        # 设置日志
+        # Set up logging
         logging.basicConfig(
             filename=f"{self.log_dir}/experiment_{datetime.now().strftime('%Y%m%d_%H')}.log",  
             level=logging.INFO,  
@@ -105,11 +104,11 @@ class DiscreteChoiceExperiment():
         )
         self.logger = logging.getLogger()
 
-        # 保存config留底
+        # Save config 
         with open(f"{self.config_dir}/config.json","w") as json_file:
             json.dump(config,json_file,indent=4)
 
-        # 读取数据和初始化模型
+        # Load data and initialize the model
         self.df = self._load_df()
         self.model = self._create_model()
         self.result_df = pd.DataFrame()
@@ -119,11 +118,11 @@ class DiscreteChoiceExperiment():
         self.wtt = None
 
 
-    # ------------初始化相关函数----------------
+    # ------------Process function----------------
     @ process_log
     def _load_df(self):
         """
-        读取数据及抽样
+        Load and sample data
         """
         df = pd.read_parquet(self.df_path)
 
@@ -140,14 +139,14 @@ class DiscreteChoiceExperiment():
     @ process_log
     def _create_model(self):
         """
-        创建模型
+        Create the model 
         """
 
-        # 多项式模型
+        # MultinomialLogit model
         if self.model_type=="MultinomialLogit":
             return MultinomialLogit()
         
-        # 混合模型
+        # MixedLogit model
         if self.model_type=="MixedLogit":
             return MixedLogit()
         
@@ -155,7 +154,7 @@ class DiscreteChoiceExperiment():
     @ process_log
     def reset(self):
         """
-        重置
+        Reset
         """
         self.model = self._create_model()
         self.result_df = pd.DataFrame()
@@ -164,15 +163,15 @@ class DiscreteChoiceExperiment():
         self.wtt = None
             
 
-    # ------------实验功能函数----------------
+    # ------------Experimental objective function----------------
     @ process_log
     def fit(self,df:pd.DataFrame):
 
         """
-        模型估计
+        Model estimation
         """
 
-        # 多项式模型估计
+        # MultinomialLogit estimation
         if self.model_type=="MultinomialLogit":
             self.model.fit(X=df[self.explanatory_variable_list],
                         y=df[self.choice_col],
@@ -181,7 +180,7 @@ class DiscreteChoiceExperiment():
                         alts=df[self.alt_col],
                         )
 
-        # 混合模型估计
+        # MixedLogit estimation
         if self.model_type=="MixedLogit":
             self.model.fit(X=df[self.explanatory_variable_list],
             y=df[self.choice_col],
@@ -196,7 +195,7 @@ class DiscreteChoiceExperiment():
     @ process_log
     def calculate_null_ll(self,df:pd.DataFrame):
         """
-        计算空模型最大似然值
+        Null model likelihood
         """
 
         choice_num = len(df[self.id_col].unique())
@@ -207,23 +206,23 @@ class DiscreteChoiceExperiment():
     @ process_log 
     def calculate_pseudo_r_2(self):
         """
-        计算伪R方
+        Compute pseudo R-squared
         """
         self.pseudo_r_2 = 1-self.model.loglikelihood/self.null_ll
 
     @ process_log
     def calculate_wtt(self,df:pd.DataFrame,save_name:str):
         """
-        计算三次项距离花费分布下的WTT
+        Calculate WTT
         """
 
-        # 距离x的分布范围采样
+        # Sampling from the distribution range of distance x
 
         percentiles = np.linspace(0, 1, 21)
         df = df[df[self.cost_utility_col[0]]>0]
         x = df[self.cost_utility_col[0]].quantile(percentiles)
 
-        # MDD系数
+        # Distance coefficient
         a, b, c = 0, 0, 0
         for i in range(len(self.model.coeff_)):
             if self.model.coeff_names[i] == self.cost_utility_col[0]:
@@ -233,7 +232,7 @@ class DiscreteChoiceExperiment():
             if self.model.coeff_names[i] == self.cost_utility_col[2]:
                 c = self.model.coeff_[i]
 
-        # 质量效用系数
+        # Quality utility coefficient
         quality_utility_coeff_df = pd.DataFrame()
         for i in range(len(self.model.coeff_)):
             for col in self.quality_utility_col:
@@ -244,7 +243,7 @@ class DiscreteChoiceExperiment():
         
         print(quality_utility_coeff_df)
 
-        # 计算WTT
+        # Compute WTT
         self.wtt = pd.DataFrame({self.cost_utility_col[0]:x})
         for col in quality_utility_coeff_df.columns:
             y = []
@@ -253,7 +252,7 @@ class DiscreteChoiceExperiment():
                 y.append(-quality_utility_coeff/(a+ 2*b*value + 3*c*(value**2)))
             self.wtt[col]=y
 
-        # 保存WTT
+        # Save WTT
         os.makedirs(f"{self.WTT_dir}/{save_name}",exist_ok=True)
         os.makedirs(f"{self.WTT_dir}/{save_name}/df",exist_ok=True)
         self.wtt.to_csv(f"{self.WTT_dir}/{save_name}/df/result.csv")
@@ -263,7 +262,7 @@ class DiscreteChoiceExperiment():
     @ process_log
     def plot_wtt(self,save_name:str):
         """
-        # 绘制WTT随距离的分布
+        # Plot the distribution of WTT
         """
         plt_num = len(self.wtt.columns[1:])
         fig_col = 3
@@ -300,7 +299,7 @@ class DiscreteChoiceExperiment():
     def record_result(self,
                       individual_count:int):
         """
-        记录估计好的参数结果
+        Record the estimated parameter results
         """
 
         self.pseudo_r_2 = 1-self.model.loglikelihood/self.null_ll
@@ -331,20 +330,20 @@ class DiscreteChoiceExperiment():
     @ process_log
     def save_record_result(self,save_path):
         """
-        保存记录结果
+        Save the recorded results
         """
         self.result_df.to_json(save_path,orient='records', indent=4)
 
 
-    # ------------实验主要流程执行函数----------------
+    # ------------Main procedure execution function of the experiment----------------
     @ process_log
     def run_experiment(self):
 
         """
-        主要实验流程,分组与不分组
+        Main experimental procedure, with and without grouping
         """
 
-        # SES分组情况
+        # Group
         if self.group_attribute:
             for group_class in self.df[self.group_attribute].unique():
                 group_df = self.df[self.df[self.group_attribute]==group_class].copy()
@@ -363,7 +362,7 @@ class DiscreteChoiceExperiment():
                 cp.get_default_memory_pool().free_all_blocks()
                 cp.get_default_pinned_memory_pool().free_all_blocks()
 
-        # SES不分组情况
+        # No group
         else:
 
             self.fit(self.df)
@@ -381,7 +380,7 @@ class DiscreteChoiceExperiment():
 
 if __name__=="__main__":
 
-    # 实验一：混合Logit、无交互项、无分组
+    # Group experiment
     config = {
 
         "experiment_name": "MixedLogit_without_interaction_no_group",
@@ -417,7 +416,7 @@ if __name__=="__main__":
     gc.collect()
 
 
-    # 实验二：混合Logit、无交互项、无分组
+    # No group experiment
     config = {
 
         "experiment_name": "MixedLogit_without_interaction_SES_group",

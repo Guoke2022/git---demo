@@ -76,7 +76,7 @@ For individuals from residential unit i visiting hospital L, we quantified their
 
 where:
 
-r_{j,L} = income rank of individuals from unit j who visit hospital L
+$r_{j,L}$ = income rank of individuals from unit j who visit hospital L
 
 n = number of residential units represented among patients visiting hospital L
 

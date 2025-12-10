@@ -6,21 +6,27 @@ This document provides methodological details for the computation of the Nth Nea
 
 ## 1. Nth Nearest Hospital Index (NNHI)
 
-The Nth Nearest Hospital Index (NNHI) was introduced to depict patients' hospital bypass behaviours. NNHI is computed by sorting the road-network distances between a patient's residence and all hospitals in the city in ascending order, and identifying the rank of the actually visited hospital.
+The Nth Nearest Hospital Index (NNHI) was used to characterize hospital bypass behaviour. NNHI measures how far down the ordered list of nearby hospitals a patient chooses to visit.
 
-Formally, for patient \(i\), let \(d_{i1} \le d_{i2} \le \dots \le d_{iJ}\) denote the ordered road-network distances from their residence to all \(J\) hospitals. If the visited hospital corresponds to the \(N\)-th element in this ordered list, then the NNHI for patient \(i\) is:
+To compute NNHI for each patient:
 
-\[
-\text{NNHI}_i = N.
-\]
+Calculate the road network distance from the patient’s residence to all hospitals in the city.
 
+Sort these distances in ascending order.
 
-This rank reflects the patient's willingness to prioritize more distant hospitals over closer ones. For example:
+Identify the rank of the hospital actually visited.
 
-- \(\text{NNHI} = 1\): the patient visits the **nearest** hospital (non-bypass behaviour).
-- \(\text{NNHI} = 5\): the patient visits the **5th nearest** hospital (bypass behaviour).
+Record this rank as the NNHI value.
 
-Higher NNHI values therefore indicate stronger bypass behaviour.
+Interpretation:
+
+NNHI = 1: The patient visited the nearest hospital (no bypass behaviour).
+
+NNHI > 1: The patient bypassed closer hospitals and chose a more distant one.
+
+For example, NNHI = 5 indicates that the patient selected the fifth nearest hospital.
+
+This metric provides a simple, interpretable indicator of patients' preferences or constraints that lead them to bypass nearby facilities.
 
 ---
 

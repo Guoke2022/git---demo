@@ -60,101 +60,129 @@ Shortest-path travel times were calculated using OpenStreetMap road network data
 
 ---
 
-## 3. Experienced Segregation (ES) and Experienced Socioeconomic Class (ESC)
+## 3. Experienced Segregation Index Within Hospitals
 
-To analyse the impact of hospital bypass behaviour on social segregation, we adopted the experienced segregation (ES) index as proposed in earlier literature. This index quantifies the degree to which patients from different economic backgrounds effectively share hospital services.
+The experienced segregation (ES) index was used to assess how hospital bypass behaviour affects socioeconomic mixing within hospitals. The ES framework follows prior work by Abbiasov and Xu, and quantifies how frequently patients from different economic strata encounter one another during hospital visits.
 
-### 3.1. Income rank assignment
+### 4.1. Income Rank Assignment
 
-Within each city, residential units (200 m × 200 m grids) are sorted into deciles based on their mean residential property value. These decile ranks are then assigned to patients residing in each unit, providing an income rank \(r_i\) for patients originating from unit \(i\).
+Each city was divided into 200 m × 200 m residential grid units. Units were ranked into deciles based on their average residential property value. The decile rank was then assigned to all patients residing in that grid, serving as the proxy for each individual's income rank.
 
-### 3.2. Experienced integration at the hospital level
+### 4.2. Experienced Integration at the Hospital Level
 
-For individuals from unit \(i\) accessing hospital \(L\), the **experienced integration** at hospital \(L\) is defined as:
+For individuals from residential unit i visiting hospital L, we quantified their level of socioeconomic integration with all other units visiting the same hospital.
 
-\[
-\text{experienced\_integration}_{(i,L)} =
-\frac{1}{n - 1}
-\sum_{j \neq i}^{n}
-\left| r_{(i,L)} - r_{(j,L)} \right|
-\tag{2}
-\]
+![alt text](ES1.png)
 
 where:
 
-- \(r_{(j,L)}\) is the income rank of individuals from unit \(j\) who visit hospital \(L\),
-- \(n\) is the total number of distinct origin units whose residents access hospital \(L\),
-- \(\left| r_{(i,L)} - r_{(j,L)} \right|\) is the absolute income-rank difference between units \(i\) and \(j\) among patients visiting the same hospital.
+r_{j,L} = income rank of individuals from unit j who visit hospital L
 
-This measures the degree of interaction or co-presence between patients from unit \(i\) and patients from other income ranks at hospital \(L\).
+n = number of residential units represented among patients visiting hospital L
 
-### 3.3. Aggregating experienced integration to the unit level
+This value measures the average socioeconomic distance between unit i and all other units accessing hospital L.
 
-We then aggregate over all hospitals visited by residents of unit \(i\) to obtain a unit-level measure of experienced integration:
+### 4.3. Aggregating to the Residential Unit Level
 
-\[
-\text{experienced\_integration}_i =
-\frac{
-\sum_{L \in \text{HOSPs}}
-\text{experienced\_integration}_{(i,L)} \cdot p_{(i,L)}
-}{
-\sum_{L \in \text{HOSPs}} p_{(i,L)}
-}
-\tag{3}
-\]
+Experienced integration at the residential-unit level is obtained by aggregating over all hospitals accessed by individuals from unit i:
+
+images/ES2.png
+
+experienced_integration(i)
+
 
 where:
 
-- \(p_{(i,L)}\) is the number of people from unit \(i\) who visit hospital \(L\),
-- the summation runs over all hospitals \(L\) accessed by individuals from unit \(i\).
+𝑝
+𝑖
+,
+𝐿
+p
+i,L
+	​
 
-### 3.4. Experienced segregation index
+ = number of individuals from unit i who visited hospital L
 
-The **experienced segregation** for unit \(i\) is then defined as:
+HOSPs = set of all hospitals within the city
 
-\[
-\text{experienced\_segregation}_i =
-1 - \text{experienced\_integration}_i.
-\tag{4}
-\]
+This weighted average accounts for the distribution of patients from unit i across different hospitals.
 
-Higher values of \(\text{experienced\_segregation}_i\) indicate stronger effective segregation in hospital use by residents of unit \(i\).
+Experienced Segregation
 
-### 3.5. Experienced socioeconomic class (ESC)
+Experienced segregation is defined as:
 
-To determine whether a hospital is predominantly accessed by low- or high-property-value communities, we define an experienced socioeconomic class (ESC) index based on the average income rank of patients accessing each hospital.
+(Insert Formula Image Here for Equation 3)
+Example placeholder:
 
-For individuals from unit \(i\) accessing hospital \(L\), we compute:
+experienced_segregation(i) = 1 - experienced_integration(i)
 
-\[
-\text{experienced\_socioeconomic\_class}_{(i,L)} =
-\frac{1}{n} \sum_{j=1}^{n} r_{(j,L)}
-\tag{5}
-\]
+
+Higher values indicate greater socioeconomic isolation during hospital visits.
+
+Experienced Socioeconomic Class (ESC)
+
+To evaluate whether a hospital disproportionately serves high- or low-income communities, we computed an experienced socioeconomic class (ESC) index.
+
+ESC at the Hospital Level
+
+For individuals from unit i accessing hospital L, the ESC score is defined as the average income rank of all patient origins visiting hospital L:
+
+(Insert Formula Image Here for Equation 4)
+Example placeholder:
+
+experienced_socioeconomic_class(i, L)
+
 
 where:
 
-- \(r_{(j,L)}\) is the income rank of individuals from unit \(j\) who visit hospital \(L\),
-- \(n\) is the total number of origin units whose residents visit hospital \(L\).
+𝑟
+𝑗
+,
+𝐿
+r
+j,L
+	​
 
-This represents the average socioeconomic status of the patient mix at hospital \(L\), experienced by individuals from unit \(i\).
+ = income rank of individuals from unit 
+𝑗
+j visiting hospital 
+𝐿
+L
 
-Aggregating to the unit level, we obtain:
+𝑛
+n = total number of residential units with patients visiting the hospital
 
-\[
-\text{experienced\_socioeconomic\_class}_i =
-\frac{
-\sum_{L \in \text{HOSPs}}
-\text{experienced\_socioeconomic\_class}_{(i,L)} \cdot p_{(i,L)}
-}{
-\sum_{L \in \text{HOSPs}} p_{(i,L)}
-}
-\tag{6}
-\]
+Aggregating to the Unit Level
 
-where \(p_{(i,L)}\) is again the number of people from unit \(i\) who visit hospital \(L\).
+Unit-level ESC was computed by weighting hospital-level ESC values by visit counts:
 
-Finally, both ES and ESC measures are scaled to range between 0 and 10, where 10 corresponds to the highest level (e.g., highest segregation or highest experienced socioeconomic class) and 0 to the lowest.
+(Insert Formula Image Here for Equation 5)
+Example placeholder:
+
+experienced_socioeconomic_class(i)
+
+
+where:
+
+𝑝
+𝑖
+,
+𝐿
+p
+i,L
+	​
+
+ = number of individuals from unit i visiting hospital L
+
+Rescaling
+
+Both ES and ESC were rescaled to a 0–10 range, where:
+
+10 represents the highest level of segregation or socioeconomic status
+
+0 represents the lowest
+
+This facilitates interpretation and comparison across cities.
 
 ---
 

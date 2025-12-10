@@ -116,7 +116,8 @@ Files:
 
 ---
 
-### **10. METHODS.md** 
+## METHODS.md
+
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:
 
 - The algorithm for computing the **Nth Nearest Hospital Index (NNHI)**  

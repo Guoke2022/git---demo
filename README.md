@@ -116,7 +116,7 @@ Files:
 
 ---
 
-## METHODS.md
+## Methods
 
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:
 

@@ -90,7 +90,7 @@ Experienced integration at the residential-unit level is obtained by aggregating
 
 where:
 
-p_{i,L} = number of individuals from unit i visiting hospital L
+$p_{i,L}$ = number of individuals from unit i visiting hospital L
 
 HOSPs = set of all hospitals within the city
 
@@ -116,7 +116,7 @@ For individuals from unit i accessing hospital L, the ESC score is defined as th
 
 where:
 
-r_{j,L} = income rank of individuals from unit j who visit hospital L
+$r_{j,L}$ = income rank of individuals from unit j who visit hospital L
 
 n = number of residential units represented among patients visiting hospital L
 
@@ -128,7 +128,7 @@ Unit-level ESC was computed by weighting hospital-level ESC values by visit coun
 
 ![alt text](../images/ES5.png)
 
-where again p_{i,L} is the number of individuals from unit i accessing hospital L.
+where again $p_{i,L}$ is the number of individuals from unit i accessing hospital L.
 
 ### 4.6. Rescaling
 
@@ -154,17 +154,17 @@ The utility that patient i obtains from choosing hospital j is defined as:
 
 where:
 
-G_j = hospital grade (e.g., Tertiary Grade A, Secondary hospital)
+$G_{j}$ = hospital grade (e.g., Tertiary Grade A, Secondary hospital)
 
-B_j = hospital bed capacity (in hundreds)
+$B_{j}$ = hospital bed capacity (in hundreds)
 
-R_j = Fudan Chinese Hospital ranking
+$R_{j}$ = Fudan Chinese Hospital ranking
 
-D_{ij} = travel distance from patient i to hospital j (in 100 km units)
+$D_{ij}$ = travel distance from patient i to hospital j (in 100 km units)
 
-ε_{ij} = error term following a Type I extreme value distribution
+$\varepsilon_{ij}$ = error term following a Type I extreme value distribution
 
-The cubic distance specification allows for flexible, non-linear distance decay in hospital choice. The error term \(\varepsilon_{ij}\) is assumed to follow a Type I extreme value distribution.
+The cubic distance specification allows for flexible, non-linear distance decay in hospital choice. The error term $\varepsilon_{ij}$ is assumed to follow a Type I extreme value distribution.
 
 To capture preference heterogeneity across patients, coefficients are allowed to vary randomly in the population (mixed logit specification), and both mean preferences and standard deviations are estimated.
 
@@ -180,9 +180,9 @@ For percentile values of the observed distance distribution, WTT is computed as:
 
 where:
 
-β_Q ∈ {β_G, β_B, β_R} = marginal utility of a quality attribute (grade, beds, or ranking)
+$\beta_{Q}\in{\beta_{G},\beta_{B},\beta_{R}}$ is the marginal utility of a quality attribute (grade, beds, or ranking)
 
-D_perc = empirical travel distance percentile (evaluated at 5% intervals)
+$D_{\text{perc}}$ is the empirical travel distance percentile (evaluated at 5% intervals)
 
 This measure indicates how much additional travel burden patients accept in exchange for higher hospital quality.
 

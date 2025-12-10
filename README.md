@@ -94,7 +94,7 @@ Outputs:
 
 ### **9. MixedLogit**
 - The **discrete choice model** used in bypass behavior analysis
-
+- It includes a detailed introduction to the methods and code workflow of the discrete choice model.
 
 ### **10. else** 
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:

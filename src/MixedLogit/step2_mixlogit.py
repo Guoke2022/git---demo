@@ -1,8 +1,67 @@
+"""
+===============================================================
+Step 2: Mixed Logit Estimation
+===============================================================
+
+This script estimates Multinomial Logit or Mixed Logit models 
+using the 'xlogit' package. It supports both overall estimation 
+and group-specific estimation (e.g., by SES groups).
+
+The script performs:
+    1. Data loading and optional sampling
+    2. Model creation (MultinomialLogit or MixedLogit)
+    3. Model estimation
+    4. Computation of:
+        - log-likelihood of null model
+        - pseudo R-squared
+        - Willingness-To-Travel (WTT)
+    5. Plotting WTT curves
+    6. Saving parameter estimates and fit statistics
+
+---------------------------------------------------------------
+Input data structure (Parquet)
+---------------------------------------------------------------
+The input dataset must contain the following columns:
+
+    id                      : individual ID (int)
+    option_hosp_id         : hospital alternative ID
+    judge                   : binary choice indicator (1 = chosen)
+    CITY_JUDGE              : availability indicator for each alternative
+    option_grade            : hospital grade (encoded)
+    option_beds             : bed count (scaled)
+    option_rep              : hospital reputation score
+    option_distance_100_km  : distance in 100 km
+    option_distance_100_km_2: squared distance term
+    option_distance_100_km_3: cubic distance term
+    SES_Level (optional)    : socioeconomic group
+
+---------------------------------------------------------------
+Outputs
+---------------------------------------------------------------
+Each experiment produces:
+    /{experiment_name}/
+        config/     - saved JSON config
+        log/        - experiment log files
+        result/     - parameter estimation results (JSON)
+        WTT/        - WTT values and plots
+
+---------------------------------------------------------------
+Usage
+---------------------------------------------------------------
+Run the script directly:
+
+    python step2_mixlogit.py
+
+This will execute:
+    1. A no-group Mixed Logit experiment
+    2. A SES-group Mixed Logit experiment
+
+===============================================================
+"""
 
 from xlogit import MultinomialLogit,MixedLogit
 import pandas as pd
 import os
-import warnings
 import logging
 import json
 import time
@@ -11,7 +70,6 @@ import numpy as np
 import scipy.optimize as opt
 import seaborn as sns
 import  matplotlib.pyplot as plt
-import matplotlib as mpl
 import math
 import time
 from datetime import datetime

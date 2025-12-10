@@ -11,6 +11,8 @@ No real or personal information is included.
 
 Below is a concise and standardized description of each script's purpose.
 
+---
+
 ### **1. hospital_visits_identification.py**
 Processes large-scale synthetic trajectory data to extract potential *single-day hospital visits*.  
 Key steps include:
@@ -110,6 +112,8 @@ Files:
 - step2_mixlogit.py – Mixed Logit model estimation
 - MixedLogit_without_interaction_no_group – Results for the overall sample
 - MixedLogit_without_interaction_SES_group – Results for SES groups
+
+---
 
 ### **10. else** 
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:

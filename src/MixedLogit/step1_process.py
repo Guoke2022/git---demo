@@ -1,10 +1,56 @@
+"""
+step1_process.py
+-----------------
+This script preprocesses patient–hospital choice-set data for Mixed Logit
+discrete choice modeling. It performs the following tasks:
+
+1. Load raw choice-set data from a Parquet file
+2. Encode patient IDs
+3. Remove individuals with missing attributes
+4. Reclassify SES levels (Low / Middle / High)
+5. Encode hospital grade variables
+6. Convert units (distance → 100 km, beds → per 100 beds)
+7. Add nonlinear distance terms (quadratic and cubic)
+8. Sort data and write a cleaned Parquet file for model estimation
+
+Input File Structure (raw):
+- id                          : Patient identifier
+- SES                         : Socioeconomic status (continuous numeric score)
+- option_hosp_id              : Hospital option identifier
+- option_distance_m           : Travel distance (meters)
+- option_grade                : Hospital grade (categorical)
+- option_beds                 : Hospital bed count
+- ... (additional choice attributes)
+
+Output File Structure (processed):
+- id                          : Encoded integer patient ID
+- SES_Level                   : SES category (Low / Middle / High)
+- option_grade                : Encoded hospital grade (0–4)
+- option_distance_100_km      : Distance in 100 km units
+- option_beds                 : Beds per 100 beds
+- option_distance_100_km_2    : Quadratic distance term
+- option_distance_100_km_3    : Cubic distance term
+- option_hosp_id              : Hospital option identifier
+- ... (other preserved fields)
+
+This processed dataset will be used in step2_mixlogit.py for Mixed Logit
+model estimation.
+"""
+
 import pandas as pd
 import numpy as np
 
 def process_data(data_path:str,out_path:str):
     
     """
-    Process data
+    Preprocess raw choice-set data for Mixed Logit estimation.
+
+    Parameters
+    ----------
+    data_path : str
+        Path to input Parquet file containing raw choice-set data.
+    out_path : str
+        Path to save the processed Parquet output.
     """
 
     # load data

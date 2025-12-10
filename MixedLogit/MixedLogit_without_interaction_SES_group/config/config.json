@@ -1,0 +1,38 @@
+{
+    "experiment_name": "MixedLogit_without_interaction_SES_group",
+    "id_col": "id",
+    "alt_col": "option_hosp_id",
+    "choice_col": "judge",
+    "avail_col": "CITY_JUDGE",
+    "df_path": "data/process/all_city.parquet",
+    "group_attribute": "SES_Level",
+    "sampling_rate": 0.07,
+    "model_type": "MixedLogit",
+    "batch_size": 5,
+    "explanatory_variable_list": [
+        "option_grade",
+        "option_beds",
+        "option_rep",
+        "option_distance_100_km",
+        "option_distance_100_km_2",
+        "option_distance_100_km_3"
+    ],
+    "random_coefficient": {
+        "option_grade": "n",
+        "option_beds": "n",
+        "option_rep": "n",
+        "option_distance_100_km": "n",
+        "option_distance_100_km_2": "n",
+        "option_distance_100_km_3": "n"
+    },
+    "quality_utility_col": [
+        "option_grade",
+        "option_beds",
+        "option_rep"
+    ],
+    "cost_utility_col": [
+        "option_distance_100_km",
+        "option_distance_100_km_2",
+        "option_distance_100_km_3"
+    ]
+}

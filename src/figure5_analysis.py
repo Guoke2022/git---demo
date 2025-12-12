@@ -105,8 +105,8 @@ def build_colormap() -> LinearSegmentedColormap:
         "rb_soft",
         [
             "#ffffff",  # center white
-            "#c65f5f",  # soft red
-            "#d62728",  # red
+            "#545454",  
+            "#2F2F2F",  
         ],
         N=256
     )
@@ -469,7 +469,7 @@ def make_figure(
     x_cat = np.arange(len(categories))
 
     cat_colors = {
-        "Overall": "#F68E1E",
+        "Overall": "#f7ae55",
         "High": "#92B5C9",
         "Mid": "#9AD175",
         "Low": "#E59091",
@@ -548,7 +548,7 @@ def make_figure(
         "high": "#92B5C9",
         "low":  "#E59091",
         "mid":  "#9AD175",
-        "all":  "#F68E1E",
+        "all":  "#f7ae55",
     }
 
     # y-limits (kept from your original)
@@ -668,3 +668,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -35,8 +35,8 @@ PATH_RESULT = Path("./output/Figure3/")
 PATH_RESULT.mkdir(parents=True, exist_ok=True)
 
 # Input data files
-DF_PATH = Path("./data/NNHI_summary.csv")          # Replace with your NNHI summary CSV
-SES_TABLE = Path("./data/SES_grid_summary.csv")    # Replace with your SES grid CSV
+DF_PATH = Path("./data/NNHI_summary.csv")          # input NNHI_summary.csv
+SES_TABLE = Path("./data/SES_grid_summary.csv")    # input SES_grid_summary.csv
 
 
 # --------------------------

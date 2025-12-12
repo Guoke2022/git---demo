@@ -14,7 +14,6 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import seaborn as sns
-from pypinyin import lazy_pinyin
 
 pd.set_option('display.max_columns', None)
 
@@ -27,8 +26,8 @@ FONT_SIZE_CITY = 22
 
 
 # ========== User paths ==========
-DATA_PATH = Path("YOUR_DATA_PATH_HERE")  # Replace with your CSV folder/file path
-OUTPUT_PATH = Path("YOUR_OUTPUT_PATH_HERE")  # Replace with output folder
+DATA_PATH = Path("./data")  # input CSV folder
+OUTPUT_PATH = Path("./output/Figure1")  # output folder
 OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
 
 

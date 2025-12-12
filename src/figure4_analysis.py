@@ -51,7 +51,7 @@ dfs = []
 
 for CITY in CITY_LIST:
     CITY_PATH = DATA_PATH / CITY / "nearest_hospitals"  # input folder for each city
-    data_file = CITY_PATH / f"{CITY}_road_NNHI.csv"
+    data_file = CITY_PATH / f"{CITY}_road_NNHI.csv"     # input {CITY}_road_NNHI.csv
     data = pd.read_csv(data_file, encoding='utf-8')
 
     df = data[['id', 'name', 'HousePrice', 'home_road_dist', 'NNHI', 'road_closest', 'road_second', 'road_third']]

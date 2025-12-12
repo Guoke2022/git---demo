@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 # figure2_analysis.py
-# 
+#
 # Purpose:
 #   - Generate summary CSV files for NNHI, extra travel distance, and bypass rate
 #     including subsets for top-tier hospitals and high-reputation hospitals
@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
-from pathlib2 import Path
+from pathlib import Path
 import warnings
 
 warnings.filterwarnings('ignore')  # Ignore all warnings

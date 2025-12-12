@@ -9,7 +9,7 @@
 
 import pandas as pd
 import numpy as np
-from pathlib2 import Path
+from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from scipy.integrate import simpson
@@ -52,7 +52,7 @@ def trans_pinyin(city_name):
         return "Qiqihar"
     else:
         return ''.join(lazy_pinyin(city_name)).capitalize()[:-3]
-    
+
 
 def aggregate_by_houseprice(df_in):
     """
@@ -368,7 +368,7 @@ def plot_lorenz_curve(df, value_col, city_list, colors, ylabel, out_file):
 # =================== Main Execution ===================
 
 if __name__ == "__main__":
-    
+
     # --------------------------
     # Load data
     # --------------------------

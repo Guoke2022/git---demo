@@ -2,9 +2,13 @@
 
 Source code for "Spatial and socioeconomic inequalities in hospital utilization".
 
-This repository contains a collection of Python scripts for simulating, processing, and analyzing synthetic hospital visit trajectories.  
-All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.  
+This repository contains a collection of Python scripts for simulating, processing, and analyzing synthetic hospital visit trajectories.
+All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.
 No real or personal information is included.
+
+## 🔧 Python Version
+
+**Python 3.12** is required for this project.
 
 ---
 
@@ -129,7 +133,13 @@ These methodological explanations are intended to support reproducibility, trans
 
 ## 📦 Requirements
 
-Typical dependencies used across scripts include:
+Install the required dependencies using:
+
+```bash
+pip install -r requirements.txt
+```
+
+The main dependencies include:
 
 - pandas==2.3.3
 - numpy==2.3.4
@@ -142,3 +152,7 @@ Typical dependencies used across scripts include:
 - scipy==1.16.3
 - xlogit==0.2.7
 - cupy-cuda12x==13.6.0
+- polars==1.31.0
+- scikit-learn==1.7.2
+- networkx==3.6.1
+- tqdm==4.67.1

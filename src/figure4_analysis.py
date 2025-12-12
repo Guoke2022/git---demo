@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pathlib2 import Path
+from pathlib import Path
 import matplotlib.patches as mpatches
 pd.set_option('display.max_columns', None)
 
@@ -69,7 +69,7 @@ for CITY in CITY_LIST:
     EI_list = []
     for name, df_group in df.groupby('name'):
         n = len(df_group)
-        EI_values = [np.sum(np.abs(row - df_group['HousePrice_10cut'].values)) / (n-1) 
+        EI_values = [np.sum(np.abs(row - df_group['HousePrice_10cut'].values)) / (n-1)
                      for row in df_group['HousePrice_10cut']]
         EI_list.extend(zip(df_group['id'], EI_values))
     EI_df = pd.DataFrame(EI_list, columns=['id', 'EI'])
@@ -141,7 +141,7 @@ for i, (feature, ax) in enumerate(zip(["ES","II","ES","II"], axs.flatten())):
     ax.tick_params(axis='both', which='major', labelsize=Fontsize_label)
 
 # Create legend
-legend_handles = [mpatches.Patch(color=color, label=label) 
+legend_handles = [mpatches.Patch(color=color, label=label)
                   for label, color in zip(custom_labels, custom_palette.values())]
 fig.legend(handles=legend_handles, labels=custom_labels, fontsize=Fontsize_legend,
            bbox_to_anchor=(0.5,0.06), loc='upper center', ncol=len(custom_labels), frameon=False)

@@ -1,8 +1,8 @@
 # ------------------------------------------------------------------------------
 # figure1_analysis.py
-# 
+#
 # This script generates key figures for the paper.
-# It includes data preprocessing, calculation of extra travel ratios, 
+# It includes data preprocessing, calculation of extra travel ratios,
 # and visualization of travel distance, extra distance, and bypass rate
 # for cities and city groups.
 # ------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ import matplotlib.ticker as mtick
 import matplotlib.gridspec as gridspec
 import pandas as pd
 import numpy as np
-from pathlib2 import Path
+from pathlib import Path
 import seaborn as sns
 from pypinyin import lazy_pinyin
 

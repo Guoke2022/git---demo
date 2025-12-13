@@ -1,14 +1,12 @@
-"""
-Combined figure:
-Row 1: error-bar style panels (mean ± 2SD, with box-like glyph)
-Row 2: three line charts
-Row 3: three heatmaps + shared vertical colorbar
+# ------------------------------------------------------------------------------
+# figure5_analysis.py
+#
+# Combined figure:
+# Row 1: error-bar style panels (mean ± 2SD, with box-like glyph)
+# Row 2: three line charts
+# Row 3: three heatmaps + shared vertical colorbar
+# ------------------------------------------------------------------------------
 
-Refactored for GitHub:
-- English comments
-- Encapsulated functions
-- Centralized configuration
-"""
 from __future__ import annotations
 
 import warnings

@@ -262,7 +262,7 @@ def match_home_hospital_pairs(home_folder: str,  hospital_folder: str, output_fo
     """
     Match home and hospital ABID pairs
 
-    Args:
+    Parameters:
         home_folder: Home companion files directory
         hospital_folder: Hospital companion files directory
         output_folder: Output directory

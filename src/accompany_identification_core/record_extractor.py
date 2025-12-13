@@ -57,17 +57,6 @@ Usage Examples:
 ...     if result.success:
 ...         print(f"{result.city} {result.date}: Extracted {result.record_count} records")
 
->>> # Advanced usage
->>> from core.record_extractor import RecordExtractor, ExtractConfig
->>> config = ExtractConfig(
-...     trajectory_dir='data/origin_trajectories',
-...     accompany_dir='data/matched_pairs',
-...     output_dir='data/extracted_trajectories',
-...     workers=16
-... )
->>> extractor = RecordExtractor(config)
->>> result = extractor.extract_all_records('Beijing', '2024-01-01')
-
 """
 
 from dataclasses import dataclass

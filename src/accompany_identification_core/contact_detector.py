@@ -165,9 +165,6 @@ class DetectorConfig:
     def __post_init__(self):
         """
         Post-initialization processing, automatically calculates time window length
-
-        If window_length_minutes is not specified, automatically set to 3 times time_threshold_minutes
-        to ensure the time window covers enough trajectory points.
         """
         if self.window_length_minutes is None and self.time_threshold_minutes:
             self.window_length_minutes = self.time_threshold_minutes * 3

@@ -6,13 +6,13 @@ This repository contains a collection of Python scripts for simulating, processi
 All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.
 No real or personal information is included.
 
-## 🔧 Python Version
+## Python Version
 
-**Python 3.12** is required for this project.
+**Python 3.12** is required for this project. All the required packages are listed in `requirements.txt`.
 
 ---
 
-## 🧩 Overview of Scripts (src/)
+## Overview of Scripts (src/)
 
 Below is a concise and standardized description of each script's purpose.
 
@@ -46,7 +46,25 @@ Workflow:
 
 ---
 
-### 3. figure1_analysis.py
+### 3. family_accompany_identification.py
+
+Identifies family companions or accompanying persons among patients through spatiotemporal analysis. Implements a comprehensive multi-stage processing pipeline:
+
+**Core Processing Steps:**
+
+1. **Hospital Contact Detection** - Identifies patient pairs with contact at hospitals based on spatiotemporal overlap analysis
+2. **Residence Contact Detection** - Detects patient pairs with contact at their residences based on geographic distance calculations
+3. **ABID Pair Matching** - Matches patient pairs that satisfy both hospital contact and residence contact conditions
+4. **Trajectory Record Extraction** - Extracts complete spatiotemporal trajectory records of matched patient pairs
+5. **Journey Contact Detection** - Calculates patient contact situations outside hospitals and residential areas
+6. **Companion Ratio Calculation** - Builds patient contact network graphs and classifies patient and companion roles
+
+The specific functionality implementation of this step is located in `src/accompany_identification_core`.
+*All data used in this step are also simulated data.*
+
+---
+
+### 4. figure1_analysis.py
 
 Computes statistics and generates the visualizations used in **Figure 1** of the study.
 Includes:
@@ -57,7 +75,7 @@ Includes:
 
 ---
 
-### 4. figure2_analysis.py
+### 5. figure2_analysis.py
 
 Computes summary tables and visualization for **Figure 2**.
 Includes:
@@ -68,7 +86,7 @@ Includes:
 
 ---
 
-### 5. figure3_analysis.py
+### 6. figure3_analysis.py
 
 Generates **Figure 3**, including:
 
@@ -78,7 +96,7 @@ Generates **Figure 3**, including:
 
 ---
 
-### 6. figure4_analysis.py
+### 7. figure4_analysis.py
 
 Computes:
 
@@ -91,7 +109,7 @@ Generates **Figure 4**:
 
 ---
 
-### 7. NNHI_calculate.py
+### 8. NNHI_calculate.py
 
 Computes the **Nearest N Hospitals Index (NNHI)** and associated road-network distances.
 Includes:
@@ -103,7 +121,7 @@ Written for academic replication; does **not** require actual road networks or c
 
 ---
 
-### 8. sensitivity_analysis.py
+### 9. sensitivity_analysis.py
 
 Performs sensitivity analysis for hospital bypass behavior and SES disparities.
 Includes:
@@ -116,7 +134,7 @@ Outputs:
 
 ---
 
-### 9. MixedLogit
+### 10. MixedLogit
 
 Performs mixed logit–based discrete choice modeling to analyze hospital bypass behavior.
 
@@ -152,7 +170,7 @@ These methodological explanations are intended to support reproducibility, trans
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 Install the required dependencies using:
 

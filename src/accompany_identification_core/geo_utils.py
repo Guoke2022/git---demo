@@ -1,56 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Geographic Calculation Tools Module
+Geographic utilities for distance calculation and spatial indexing.
 
-This module provides geographic distance calculation and spatial indexing functionality based on spherical geometry,
-serving as the foundational toolkit for companion patient analysis.
-Mainly used for efficient spatio-temporal contact detection and nearest neighbor queries.
+Provides Haversine distance calculations and BallTree spatial indexing for
+efficient spatial queries on geographic coordinates.
 
-Core Features:
-==============
-1. Spherical Distance Calculation (Haversine Distance)
-   - Calculates great-circle distance between two points on Earth's surface using Haversine formula
-   - Supports single-point and batch calculations
+Functions:
+- haversine_distance: Calculate distance between two points
+- haversine_distance_batch: Batch distance calculations
+- build_ball_tree: Build spatial index for fast queries
+- find_nearby_points: Find points within radius
+- find_nearby_pairs: Find point pairs meeting distance/time thresholds
+- deduplicate_pairs: Remove duplicate patient pairs
 
-2. Spatial Indexing (BallTree)
-   - Builds BallTree spatial index based on spherical distance
-   - Supports fast range queries with time complexity O(log n)
-   - Suitable for nearest neighbor retrieval of large-scale trajectory data
-
-3. Nearest Neighbor Query (Nearby Query)
-   - Finds all points within specified radius
-   - Finds point pairs meeting distance and time thresholds
-   - Supports spatio-temporal dual filtering
-
-4. Data Deduplication
-   - Deduplicates and normalizes patient pairs
-   - Ensures AID ≤ BID uniqueness constraint
-   - Retains earliest contact records
-
-Usage Examples:
-===============
->>> import numpy as np
->>> from core.geo_utils import *
->>>
->>> # Calculate distance between two points
->>> dist = haversine_distance(39.9, 116.4, 31.2, 121.5)
->>> print(f"Beijing to Shanghai distance: {dist/1000:.1f} km")
->>>
->>> # Build spatial index
->>> lats = np.array([39.9, 31.2, 22.5])
->>> lons = np.array([116.4, 121.5, 114.1])
->>> tree = build_ball_tree(lats, lons)
->>>
->>> # Find points within 50km radius
->>> indices = find_nearby_points(tree, 39.9, 116.4, 50000)
->>>
->>> # Find point pairs meeting thresholds
->>> ids = np.array(['A', 'B', 'C'])
->>> pairs = find_nearby_pairs(ids, lats, lons, None, 100000)
-
-Constant Definitions:
-=====================
-EARTH_RADIUS_METERS: Earth's average radius (meters), used for distance-radian conversion
+Constants:
+- EARTH_RADIUS_METERS: Average Earth radius in meters
 """
 
 from typing import List, Tuple, Optional
@@ -76,9 +40,7 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
         float: Spherical distance between two points (meters)
 
     Example:
-        >>> # Calculate distance from Beijing to Shanghai
         >>> dist = haversine_distance(39.9, 116.4, 31.2, 121.5)
-        >>> print(f"{dist/1000:.1f} km")  # Approximately 1067.5 km
     """
     return haversine((lat1, lon1), (lat2, lon2)) * 1000
 
@@ -98,10 +60,9 @@ def haversine_distance_batch(point: Tuple[float, float], points: List[Tuple[floa
         np.ndarray: Distance array (meters), same length as points
 
     Example:
-        >>> point = (39.9, 116.4)  # Beijing
-        >>> cities = [(31.2, 121.5), (22.5, 114.1)]  # Shanghai, Shenzhen
+        >>> point = (39.9, 116.4)
+        >>> cities = [(31.2, 121.5), (22.5, 114.1)]
         >>> distances = haversine_distance_batch(point, cities)
-        >>> print(distances / 1000)  # Convert to kilometers
     """
     return haversine_vector([point] * len(points), points) * 1000
 
@@ -119,14 +80,9 @@ def to_radians(meters: float) -> float:
     Returns:
         float: Corresponding radians
 
-    Mathematical Principle:
-        Radians = Distance / Earth's Radius
-        where Earth's Radius = 6,371,000 meters
-
     Example:
         >>> # Radians corresponding to 50 meters
         >>> rad = to_radians(50)
-        >>> print(f"{rad:.9f} radians")
     """
     return meters / EARTH_RADIUS_METERS
 
@@ -145,19 +101,10 @@ def build_ball_tree(lats: np.ndarray, lons: np.ndarray) -> BallTree:
     Returns:
         BallTree: Constructed spatial index object
 
-    Data Structure:
-        BallTree is a spatial partitioning tree that recursively divides points into hyperspherical regions.
-        Queries can prune non-intersecting subtrees with O(log n) time complexity.
-
-    Notes:
-        - Input coordinates are in degrees, automatically converted to radians internally
-        - lats and lons must have the same length
-
     Example:
         >>> lats = np.array([39.9, 31.2, 22.5])
         >>> lons = np.array([116.4, 121.5, 114.1])
         >>> tree = build_ball_tree(lats, lons)
-        >>> # tree can be used for subsequent queries
     """
     coords = np.column_stack((lats, lons))
     return BallTree(np.radians(coords), metric='haversine')
@@ -178,12 +125,8 @@ def find_nearby_points(tree: BallTree, lat: float, lon: float, radius_meters: fl
     Returns:
         np.ndarray: Array of point indices that meet the condition
 
-    Time Complexity:
-        O(log n), where n is the number of points in the index
-
     Example:
         >>> tree = build_ball_tree(lats, lons)
-        >>> # Find all points within 50km of Beijing
         >>> indices = find_nearby_points(tree, 39.9, 116.4, 50000)
         >>> nearby_cities = cities[indices]
     """
@@ -223,14 +166,6 @@ def find_nearby_pairs(
             - When include_time=False or times is None:
               (id1, id2, lon1, lat1, lon2, lat2, distance)
 
-    Algorithm Flow:
-        1. Build BallTree spatial index
-        2. For each point i, query all points within distance threshold
-        3. Filter: exclude self (same id) and already processed points (j <= i)
-        4. Batch calculate precise Haversine distances
-        5. Apply time threshold filtering (if provided)
-        6. Collect all point pairs that meet conditions
-
     Example:
         >>> ids = np.array(['A', 'B', 'C', 'D'])
         >>> lats = np.array([39.90, 39.91, 39.92, 31.20])
@@ -238,7 +173,6 @@ def find_nearby_pairs(
         >>> times = np.array(['2024-01-01 10:00:00', '2024-01-01 10:15:00',
         ...                   '2024-01-01 10:05:00', '2024-01-01 10:00:00'],
         ...                  dtype='datetime64')
-        >>> # Find point pairs with distance < 200m and time < 20 minutes
         >>> pairs = find_nearby_pairs(ids, lats, lons, times, 200, 1200)
         >>> print(f"Found {len(pairs)} contact pairs")
     """
@@ -304,18 +238,10 @@ def deduplicate_pairs(pairs: List[Tuple], schema: List[str]) -> List[Tuple]:
         pairs (List[Tuple]): Original list of point pairs, each element is a tuple
         schema (List[str]): List of data column names defining field names for each position in tuple
             Standard format: ['AID', 'BID', 'AID_longitude', 'AID_latitude',
-                     'BID_longitude', 'BID_latitude', 'Distance', ...]
+                    'BID_longitude', 'BID_latitude', 'Distance', ...]
 
     Returns:
         List[Tuple]: Deduplicated list of point pairs, each tuple format same as input
-
-    Deduplication Strategy:
-        1. Normalize ID order: ensure AID ≤ BID (lexicographic), avoid (A,B) and (B,A) duplicates
-        2. Sort: sort by (id1, id2), further sort by time if time fields present
-        3. Deduplicate: for each unique (id1, id2) pair, keep the first record (earliest time)
-
-    Empty Data Handling:
-        If input is an empty list, directly return empty list
 
     Example:
         >>> pairs = [

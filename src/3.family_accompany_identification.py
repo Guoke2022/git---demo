@@ -11,6 +11,7 @@ Note:
 =================
 This version does not include processing optimizations for ultra-large-scale data
 to clearly demonstrate the processing workflow.
+And all data used in this step are simulated data.
 
 Core Pipeline Steps:
 =================

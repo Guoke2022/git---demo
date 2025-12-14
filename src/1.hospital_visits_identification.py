@@ -18,6 +18,7 @@
 # ------------------------------------------------------------------------------
 
 import pandas as pd 
+from fastparquet import ParquetFile
 import geopandas as gpd
 from shapely.geometry import Point
 from pathlib import Path
@@ -125,25 +126,31 @@ def filter_points_in_hospitals(chunk, polygonShp):
 
 
 # ------------------------------------------------------------
-# 5. Stage 1: Process CSV 
+# 5. Stage 1: Process parquet 
 # ------------------------------------------------------------
-def preprocess_data(input_csv, polygonShp, chunksize=2_000_000):
+def preprocess_data(input_parquet, polygonShp):
     """
-    Read large CSV file in chunks and keep only points that fall inside hospitals.
+    Read large Parquet file in row groups and keep only points
+    that fall inside hospitals.
     """
 
     all_filtered = []
-    data_iter = pd.read_csv(
-        input_csv, usecols=['id', 'lng', 'lat', 'datetime'],
-        dtype={'id': str, 'lng': str, 'lat': str},
-        chunksize=chunksize, encoding='utf-8'
-    )
 
+    pf = ParquetFile(input_parquet)
     n = 1
-    for chunk in data_iter:
+
+    for chunk in pf.iter_row_groups(
+        columns=['id', 'lon', 'lat', 'datetime']
+    ):
+
+        chunk['id'] = chunk['id'].astype(str)
+        chunk['lon'] = chunk['lon'].astype(str)
+        chunk['lat'] = chunk['lat'].astype(str)
+
         print(f"Chunk {n}: raw size = {mem_usage(chunk)}")
         filtered = filter_points_in_hospitals(chunk, polygonShp)
         print(f" → matched hospital points = {len(filtered)}")
+
         all_filtered.append(filtered)
         n += 1
 
@@ -200,15 +207,15 @@ if __name__ == '__main__':
         PATH_SHP = "../data/AOI_raw/Shenzhen_hospital_AOI.shp"
         polygonShp = gpd.read_file(PATH_SHP)[['name', 'area', 'geometry']]
 
-        # Sample CSV
-        INPUT_CSV = "../data/data.csv"
+        # Sample parquet
+        INPUT_parquet = Path("../data/trajectories/origin_trajectories/shenzhen/shenzhen_2023-04-02.parquet")
 
         # Output folder
         OUTPUT_DIR = Path("../data/result_test")
         OUTPUT_DIR.mkdir(exist_ok=True)
 
         print("=== Stage 1: Filtering points inside hospitals ===")
-        df_points = preprocess_data(INPUT_CSV, polygonShp, chunksize=2_000_000)
+        df_points = preprocess_data(INPUT_parquet, polygonShp)
         df_points.to_csv(OUTPUT_DIR / f"hospital_points_0401.csv", index=False, encoding="utf-8-sig")
         # Note: Since the analysis is performed on synthetic trajectories, the results should not be considered indicative of the method’s empirical performance.
     

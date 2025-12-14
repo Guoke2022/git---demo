@@ -5,9 +5,7 @@ This repository provides the source code for the paper
 
 This repository contains a collection of Python scripts for simulating, processing, and analyzing synthetic hospital visit trajectories.
 
-Due to the strict regulations for personal privacy protection, all individual level mobility data cannot be accessed by the public. 
-
-To ensure transparency, accessibility, and reproducibility, we provide an example **synthetic trajectory dataset** provided by the data vendor (see `./data/trajectories`) that replicates the *data structure and variable schema* of the original de-identified mobile phone data, including anonymized user identifiers, longitude, latitude, and timestamps. 
+Due to the strict regulations for personal privacy protection, all individual level mobility data cannot be accessed by the public. To make the code more accessible despite data sharing restrictions, we provide an example **synthetic trajectory dataset** provided by the data vendor (see `./data/trajectories`) that replicates the *data structure and variable schema* of the original de-identified mobile phone data, including anonymized user identifiers, longitude, latitude, and timestamps. 
 
 Using this synthetic dataset, users can run the complete workflow (Step 1–Step 3, corresponding to `Step1.hospital_visits_identification.py`
 through `Step3.family_accompany_identification.py`) end-to-end, including hospital visit identification and patient filtering, without access to restricted data. This enables researchers with access to comparable mobile phone datasets to adapt the pipeline to their own data, while allowing others to fully understand the expected input format, intermediate outputs, and analytical logic of the framework.

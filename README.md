@@ -7,8 +7,7 @@ This repository contains a collection of Python scripts for simulating, processi
 
 Due to the strict regulations for personal privacy protection, all individual level mobility data cannot be accessed by the public. To make the code more accessible despite data sharing restrictions, we provide an example **synthetic trajectory dataset** provided by the data vendor (see `./data/trajectories`) that replicates the *data structure and variable schema* of the original de-identified mobile phone data, including anonymized user identifiers, longitude, latitude, and timestamps. 
 
-Using this synthetic dataset, users can run the complete workflow (Step 1–Step 3, corresponding to `Step1.hospital_visits_identification.py`
-through `Step3.family_accompany_identification.py`) end-to-end, including hospital visit identification and patient filtering, without access to restricted data. This enables researchers with access to comparable mobile phone datasets to adapt the pipeline to their own data, while allowing others to fully understand the expected input format, intermediate outputs, and analytical logic of the framework.
+Using this synthetic dataset, users can run a complete, end-to-end demo workflow (Step 1–Step 3, corresponding to `Step1.hospital_visits_identification.py` through `Step3.family_accompany_identification.py`), including hospital visit identification and patient filtering, without access to restricted data. This enables researchers with access to comparable mobile phone datasets to adapt the pipeline to their own data, while allowing others to fully understand the expected input format, intermediate outputs, and analytical logic of the framework.
 
 *All datasets included in this repository are fully synthetic and generated solely for demonstration and reproducibility purposes. No real individuals, locations, or mobility trajectories are represented.*
 
